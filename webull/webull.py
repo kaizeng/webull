@@ -1180,6 +1180,29 @@ class webull:
             account_type = 1 # phone
 
         return account_type
+    
+    def get_net_liquidation(self, start_date):
+        '''
+        get net asset value/net liquidation value from a given date
+        '''
+        headers = self.build_req_headers()
+        response = requests.get(self._urls.net_liquidation(self._account_id,start_date), headers=headers)
+        result = response.json()
+        return result
+    
+    def get_transfer_list(self, page_size=10, last_record_id="0"):
+        '''
+        get transfer list
+        '''
+        headers = self.build_req_headers()
+        data = {
+            "pageSize":page_size,
+            "lastRecordId":last_record_id       
+         }
+        response = requests.post(self._urls.transfer_list(self._account_id), json=data, headers=headers)
+        result = response.json()
+        return result
+
 
 ''' Paper support '''
 class paper_webull(webull):
@@ -1296,6 +1319,7 @@ class paper_webull(webull):
         response = requests.get(self._urls.social_home(topic, num), headers=headers)
         result = response.json()
         return result
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interface with Webull. Paper trading is not the default.')

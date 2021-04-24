@@ -193,3 +193,9 @@ class urls :
 
     def portfolio_lists(self):
         return f'{self.base_options_gw_url}/personal/portfolio/v2/check'
+
+    def net_liquidation(self, account_id, start_date):
+        return f'{self.base_ustrade_url}/trading/v1/profitloss/account/listNetLiquidationTrend?secAccountId={account_id}&startDate={start_date}'
+    
+    def transfer_list(self, account_id):
+        return f'{self.base_ustrade_url}/trade/asset/{account_id}/getWebullTransferList'
